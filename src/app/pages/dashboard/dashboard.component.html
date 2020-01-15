@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-globe text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">People Surveyed</p>
+              <p class="card-title">{{ gender[1] + gender[2] + gender [3] }}<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-mars"></i> Male : {{gender[1]}}
+          <i class="fa fa-venus ml-2"></i> Female : {{gender[2]}}
+          <i class="fa fa-transgender ml-2"></i> Trans : {{gender[3]}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-money-coins text-success"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Money Savers</p>
+              <p class="card-title">{{ saveMoney }}
+                <p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-info"></i> {{((saveMoney/totalCount)*100).toFixed(2)}}% are able to save money
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-bank text-danger"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Type of Savings</p>
+              <p class="card-title">{{((saveType[maxSaveTypeId]['count']/totalCount)*100).toFixed(2)}}%<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-info"></i> Max people save using {{saveType[maxSaveTypeId]['id']}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Earning Benefits</p>
+              <p class="card-title">{{((earningBenefits[maxEarnBenefitsId]['count']/totalCount)*100).toFixed(2)}}%<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-info"></i> {{earningBenefits[maxEarnBenefitsId]['id']}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Personal Details based on Age Group</h5>
+        <div class="form-group" style="display: inline-block; float: right;">
+          <label for="exampleFormControlSelect1"></label>
+          <select class="form-control" #ageSelectId (change)='ageSelect(ageSelectId.value)'>
+            <option [value]=1>Only age</option>
+            <option [value]=2>Education</option>
+            <option [value]=3>Marital Status</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body ">
+        <canvas id="barChartAge" width="400" height="250"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Insights on Family</h5>
+        <div class="form-group" style="display: inline-block; float: right;">
+          <label for="familySelectId"></label>
+          <select class="form-control" #familySelectId (change)='familySelect(familySelectId.value)'>
+            <option [value]=0>Family Type</option>
+            <option [value]=1># of Members</option>
+            <option [value]=2>House Type</option>
+            <option [value]=3># of Dependents</option>
+            <option [value]=4># of Members Earning</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body ">
+        <canvas id="pieChartFamily" width="400" height="195"></canvas>
+      </div>
+      <div class="card-footer ">
+        <div class="legend text-center mt-3 mb-4">
+          <span *ngFor="let label of currentFamilyPieLabels; let i = index">
+            <i class="fa fa-circle pie-{{i+1}}"></i> {{label}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Economic Contributions</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group" style="display: inline-block; float: right;">
+              <label for="workTypeSelectId"></label>
+              <select class="form-control" #workTypeSelectId (change)='workTypeSelect(workTypeSelectId.value)'>
+                <option [value]=0>Normal Type of Works</option>
+                <option [value]=1>Work during Fishing ban</option>>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" style="display: inline-block; float: right;">
+              <label for="workSelectId"></label>
+              <select class="form-control" #workSelectId (change)='workSelect(workSelectId.value)'>
+                <option [value]=0>Working Years</option>
+                <option [value]=1>Working Hours</option>
+                <option [value]=2>Is Help Taken in Work</option>
+                <option [value]=3>Helpers in Work</option>
+                <option [value]=4>Earnings per day at Work</option>
+                <option [value]=5>Financial Management</option>
+                <option [value]=6>Help Received from Government</option>
+                <option [value]=7>Help Received from NGOs</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <canvas id="barChartWork" width="400" height="250"></canvas>
+          </div>
+          <div class="col-md-6">
+            <canvas id="pieChartWork" width="400" height="200"></canvas>
+            <div class="legend text-center mt-3">
+              <span *ngFor="let label of currentWorkPieLabels; let i = index">
+                <i class="fa fa-circle pie-{{i+1}}"></i> {{label}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-xs-12 col-lg-4">
+    <h4 class="card-title">
+      <div class="form-group">
+        <label for=""></label>
+        <select class="form-control custom-select" #typeSelectId (change)='typeSelect(typeSelectId.value)'>
+          <option [value]=0>Post Harvest Facilities</option>
+          <option [value]=1>Awareness On Government Policies</option>
+          <option [value]=2>Awareness On Environmental Polution</option>
+        </select>
+      </div>
+    </h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6" *ngFor="let data of currentDataset; let i = index">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="icon-big text-center icon-warning pie-{{(i%7)+1}}">
+              {{((data['yes']/totalCount)*100).toFixed(2)}}%
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="numbers">
+              <p class="card-title"><p>
+              <p class="card-category text-dark">{{data['stmt']}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-info"></i> {{data['yes']}} of {{totalCount}} people think this way
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" [hidden]="currentId != 2">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Is sustainable development possible in fisheries</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="barChart1" width="400" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Steps taken to avoid pollution</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="barChart2" width="400" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title" style="display: inline-block;">Solutions for marine pollution</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="barChart3" width="400" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
